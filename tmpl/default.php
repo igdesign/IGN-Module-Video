@@ -8,10 +8,12 @@ $moduleclass_sfx = $params->get('moduleclass_sfx', $template); ?>
 <ul class="video__list"><!--
   <?php foreach($list as $key => $item) : ?>
 --><li class="video">
-    <h2 class="video__title"><?=$item->content_title;?></h2>
     <div class="video__wrapper">
       <?=$item->video;?>
     </div>
+
+    <h2 class="video__title"><?=$item->content_title;?></h2>
+
     <div class="video__content">
       <?=$item->content_introtext;?>
     </div>
