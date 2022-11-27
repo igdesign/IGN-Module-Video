@@ -18,80 +18,86 @@ class modVideoHelper
 	/**
 	 * Retrieves a list of content items to display
 	 *
-	 * @param array $params An object containing the module parameters
+	 * @param   array  $params  An object containing the module parameters
+	 *
 	 * @access public
 	 */
-	public static function getItem( &$params )
+	public static function getItem(&$params)
 	{
 
 
-		$db       = JFactory::getDbo();
-		$user     = JFactory::getUser();
-		$groups   = implode(',', $user->getAuthorisedViewLevels());
+		$db     = JFactory::getDbo();
+		$user   = JFactory::getUser();
+		$groups = implode(',', $user->getAuthorisedViewLevels());
 
 		// Preferences
-		$categories = $params->get('categories');
+		$categories     = $params->get('categories');
 		$not_categories = $params->get('not_categories');
-		$tags       = $params->get('tags');
-		$featured   = $params->get('featured_only', 0);
-		$maximum    = $params->get('maximum', 5);
-		$order      = $params->get('order', 0);
-		$feature_first = $params->get('featured_first', 0);
-		$direction  = $params->get('direction', 0);
-		$template   = $params->get('template', 'Carousel');
-		$use_js     = $params->get('use_js', 1);
-		$use_css    = $params->get('use_css', 1);
-		$truncate   = $params->get('truncate', 140);
-		$itemid     = $params->get('itemid', false);
-		$offset     = $params->get('offset', 0);
-		$itemid     = $params->get('itemid', false);
+		$tags           = $params->get('tags');
+		$featured       = $params->get('featured_only', 0);
+		$maximum        = $params->get('maximum', 5);
+		$order          = $params->get('order', 0);
+		$feature_first  = $params->get('featured_first', 0);
+		$direction      = $params->get('direction', 0);
+		$template       = $params->get('template', 'Carousel');
+		$use_js         = $params->get('use_js', 1);
+		$use_css        = $params->get('use_css', 1);
+		$truncate       = $params->get('truncate', 140);
+		$itemid         = $params->get('itemid', false);
+		$offset         = $params->get('offset', 0);
+		$itemid         = $params->get('itemid', false);
 
 
-		$access = !JComponentHelper::getParams('com_content')->get('show_noauth');
+		$access     = !JComponentHelper::getParams('com_content')->get('show_noauth');
 		$authorised = JAccess::getAuthorisedViewLevels(JFactory::getUser()->get('id'));
 
 		// SELECT
 		$qSelect = array();
-		$qFrom = array();
-		$qJoin = array();
-		$qWhere = array();
-		$qOrder = array();
-		$qLimit = array();
+		$qFrom   = array();
+		$qJoin   = array();
+		$qWhere  = array();
+		$qOrder  = array();
+		$qLimit  = array();
 
-		$qSelect[] = $db->quoteName( 'content.id', 'content_id' );
-		$qSelect[] = $db->quoteName( 'content.title', 'content_title' );
-		$qSelect[] = $db->quoteName( 'content.alias', 'content_alias' );
-		$qSelect[] = $db->quoteName( 'content.introtext', 'content_introtext' );
-		$qSelect[] = $db->quoteName( 'content.fulltext', 'content_fulltext' );
-		$qSelect[] = $db->quoteName( 'content.images', 'content_images' );
+		$qSelect[] = $db->quoteName('content.id', 'content_id');
+		$qSelect[] = $db->quoteName('content.title', 'content_title');
+		$qSelect[] = $db->quoteName('content.alias', 'content_alias');
+		$qSelect[] = $db->quoteName('content.introtext', 'content_introtext');
+		$qSelect[] = $db->quoteName('content.fulltext', 'content_fulltext');
+		$qSelect[] = $db->quoteName('content.images', 'content_images');
 
 
 		$qFrom[] = $db->quoteName('#__content', 'content');
 
 		// join category alias to content item for router
-		$qSelect[] = $db->quoteName( 'category.id', 'category_id');
-		$qSelect[] = $db->quoteName( 'category.alias', 'category_alias');
-		$qJoin[] = array('direction' => 'LEFT',
-		                 'table'     => $db->quoteName('#__categories', 'category'),
-		                 'on' => $db->quoteName('content.catid').' = '.$db->quoteName('category.id'));
+		$qSelect[] = $db->quoteName('category.id', 'category_id');
+		$qSelect[] = $db->quoteName('category.alias', 'category_alias');
+		$qJoin[]   = array('direction' => 'LEFT',
+		                   'table'     => $db->quoteName('#__categories', 'category'),
+		                   'on'        => $db->quoteName('content.catid') . ' = ' . $db->quoteName('category.id'));
 
 		if ($categories)
 		{
-			if (count($categories) > 1) {
-				$qWhere[] = '('.$db->quoteName('category.id').' = '.implode(' OR '.$db->quoteName('category.id').' = ', $categories).')';
-			} else {
-				$qWhere[] = $db->quoteName('category.id').' = '. $categories[0];
+			if (count($categories) > 1)
+			{
+				$qWhere[] = '(' . $db->quoteName('category.id') . ' = ' . implode(' OR ' . $db->quoteName('category.id') . ' = ', $categories) . ')';
+			}
+			else
+			{
+				$qWhere[] = $db->quoteName('category.id') . ' = ' . $categories[0];
 			}
 		}
 
 
-
 		if ($not_categories)
 		{
-			if (count($not_categories) > 1) {
-				$qWhere[] = '('.$db->quoteName('category.id').' != '.implode(' AND '.$db->quoteName('category.id').' != ', $not_categories).')';
-			} else {
-				$qWhere[] = $db->quoteName('category.id').' != '. $not_categories[0];
+			if (count($not_categories) > 1)
+			{
+				$qWhere[] = '(' . $db->quoteName('category.id') . ' != ' . implode(' AND ' . $db->quoteName('category.id') . ' != ', $not_categories) . ')';
+			}
+			else
+			{
+				$qWhere[] = $db->quoteName('category.id') . ' != ' . $not_categories[0];
 			}
 		}
 
@@ -99,37 +105,58 @@ class modVideoHelper
 		{
 			$qJoin[] = array('direction' => 'LEFT',
 			                 'table'     => $db->quoteName('#__contentitem_tag_map', 'content_tag'),
-			                 'on'        => $db->quoteName('content_tag.content_item_id').' = '.$db->quoteName('content.id'));
-			if (count($tags) > 1) {
-				$qWhere[] = '('.$db->quoteName('content_tag.tag_id').' = '.implode(' OR '.$db->quoteName('content_tag.tag_id').' = ', $tags).')';
+			                 'on'        => $db->quoteName('content_tag.content_item_id') . ' = ' . $db->quoteName('content.id'));
+			if (count($tags) > 1)
+			{
+				$qWhere[] = '(' . $db->quoteName('content_tag.tag_id') . ' = ' . implode(' OR ' . $db->quoteName('content_tag.tag_id') . ' = ', $tags) . ')';
 			}
-			$qWhere[] = $db->quoteName('content_tag.tag_id').' = '. $tags[0];
+			$qWhere[] = $db->quoteName('content_tag.tag_id') . ' = ' . $tags[0];
 		}
 
 		// featured only
-		if ($featured) {
-			$qWhere[] = $db->quoteName('content.featured').' = 1';
+		if ($featured)
+		{
+			$qWhere[] = $db->quoteName('content.featured') . ' = 1';
 		}
 
 		// featured first
-		if ($feature_first) {
-			$qOrder[] = $db->quoteName('content.featured').' DESC';
+		if ($feature_first)
+		{
+			$qOrder[] = $db->quoteName('content.featured') . ' DESC';
 		}
 
 		// Published Only
-		$qWhere[] = $db->quoteName('content.state').' = '. 1;
+		$qWhere[] = $db->quoteName('content.state') . ' = ' . 1;
 
 
 		// ordering
-		if ($direction == 0) { $direction = 'ASC'; }
-		if ($direction == 1) { $direction = 'DESC'; }
-		if ($order == 0) { $order = 'ordering'; }
-		if ($order == 1) { $order = 'title'; }
-		if ($order == 2) { $order = 'created'; }
-		if ($order == 3) { $order = 'publish_up'; }
+		if ($direction == 0)
+		{
+			$direction = 'ASC';
+		}
+		if ($direction == 1)
+		{
+			$direction = 'DESC';
+		}
+		if ($order == 0)
+		{
+			$order = 'ordering';
+		}
+		if ($order == 1)
+		{
+			$order = 'title';
+		}
+		if ($order == 2)
+		{
+			$order = 'created';
+		}
+		if ($order == 3)
+		{
+			$order = 'publish_up';
+		}
 		if ($order)
 		{
-			$qOrder[] = $db->quoteName('content.'.$order).' '.$direction;
+			$qOrder[] = $db->quoteName('content.' . $order) . ' ' . $direction;
 		}
 
 		$qLimit['offset'] = $offset;
@@ -141,8 +168,9 @@ class modVideoHelper
 
 
 		$qJoins = array();
-		foreach($qJoin as $join) {
-			$qJoins[] = $join['direction'].' JOIN '.$join['table'].' ON '.$join['on'];
+		foreach ($qJoin as $join)
+		{
+			$qJoins[] = $join['direction'] . ' JOIN ' . $join['table'] . ' ON ' . $join['on'];
 		}
 
 		/*     print_r($qSelect); */
@@ -154,23 +182,30 @@ class modVideoHelper
 
 
 		$query = '';
-		if (!$qSelect) { return; }
-		$query .= 'SELECT '.implode(',', $qSelect);
-		if (!$qFrom) { return; }
-		$query .= ' FROM '.implode(',', $qFrom);
-
-		if ($qJoins) {
-			$query .= ' '.implode(' ', $qJoins);
+		if (!$qSelect)
+		{
+			return;
 		}
-		if ($qWhere) {
-			$query .= ' WHERE '.implode(' AND ', $qWhere);
+		$query .= 'SELECT ' . implode(',', $qSelect);
+		if (!$qFrom)
+		{
+			return;
 		}
-		if ($qOrder) {
-			$query .= ' ORDER BY '.implode(', ', $qOrder);
+		$query .= ' FROM ' . implode(',', $qFrom);
+
+		if ($qJoins)
+		{
+			$query .= ' ' . implode(' ', $qJoins);
 		}
-		$query .= ' LIMIT '.implode(', ', $qLimit);
-
-
+		if ($qWhere)
+		{
+			$query .= ' WHERE ' . implode(' AND ', $qWhere);
+		}
+		if ($qOrder)
+		{
+			$query .= ' ORDER BY ' . implode(', ', $qOrder);
+		}
+		$query .= ' LIMIT ' . implode(', ', $qLimit);
 
 
 		// build query and return it
@@ -182,31 +217,37 @@ class modVideoHelper
 
 		$results = $db->loadObjectList();
 
-		foreach($results as $key => $result)
+		foreach ($results as $key => $result)
 		{
 
 			$result->content_title = trim($result->content_title);
-			$result->text = $result->content_introtext . $result->content_fulltext;
-			$result->text = strip_tags($result->text, '<object><iframe>');
+			$result->text          = $result->content_introtext . $result->content_fulltext;
+			$result->text          = strip_tags($result->text, '<object><iframe>');
 
-			$foundVideos = modVideoHelper::getTag($result->text);
+			$foundVideos   = modVideoHelper::getTag($result->text);
 			$result->video = $foundVideos['video'];
-			$result->text = $foundVideos['content'];
+			$result->text  = $foundVideos['content'];
 
 			$result->content_introtext = modVideoHelper::truncate($result->text, $truncate);
 
-			$result->slug = $result->content_id . ':' . $result->content_alias;
+			$result->slug    = $result->content_id . ':' . $result->content_alias;
 			$result->catslug = $result->category_id . ':' . $result->category_alias;
 
-			if ($access || in_array($result->access, $authorised)) {
+			if ($access || in_array($result->access, $authorised))
+			{
 				// We know that user has the privilege to view the article
-				if ($itemid) {
+				if ($itemid)
+				{
 					$result->link = modVideoHelper::getArticleRoute($result->slug, $itemid, $result->catslug);
-				} else {
+				}
+				else
+				{
 					$result->link = JRoute::_(ContentHelperRoute::getArticleRoute($result->slug, $result->catslug));
 				}
 
-			} else {
+			}
+			else
+			{
 				$result->link = JRoute::_('index.php?option=com_users&view=login');
 			}
 
@@ -220,16 +261,18 @@ class modVideoHelper
 	private static function truncate($text, $chars = 25)
 	{
 		$trunc = false;
-		if (strlen($text) >= $chars) {
+		if (strlen($text) >= $chars)
+		{
 			$trunc = true;
 		}
 
-		$text = $text." ";
-		$text = substr($text,0,$chars);
-		$text = substr($text,0,strrpos($text,' '));
+		$text = $text . " ";
+		$text = substr($text, 0, $chars);
+		$text = substr($text, 0, strrpos($text, ' '));
 
-		if ($trunc == true) {
-			$text = trim($text)."&hellip;";
+		if ($trunc == true)
+		{
+			$text = trim($text) . "&hellip;";
 		}
 
 		return $text;
@@ -239,9 +282,10 @@ class modVideoHelper
 	{
 
 		$match = array();
-		$type = null;
+		$type  = null;
 
-		if (strpos($content, '{youtube') !== false) {
+		if (strpos($content, '{youtube') !== false)
+		{
 			$pattern = "/{.*}/";
 			preg_match($pattern, $content, $match);
 			$content = preg_replace($pattern, '', $content);
@@ -249,18 +293,19 @@ class modVideoHelper
 			$match[0] = modVideoHelper::buildEmbed($match[0]);
 		}
 
-		if (strpos($content, '<iframe') !== false) {
+		if (strpos($content, '<iframe') !== false)
+		{
 			$patternFrame = "/<iframe.*?iframe>/";
 			preg_match($patternFrame, $content, $match);
 			$content = preg_replace($patternFrame, '', $content);
 		}
 
-		if (strpos($content, '<object') !== false) {
+		if (strpos($content, '<object') !== false)
+		{
 			$patternObject = "/<object.*?object>/";
 			preg_match($patternObject, $content, $match);
 			$content = preg_replace($patternObject, '', $content);
 		}
-
 
 
 		return array('video' => $match[0], 'content' => $content);
@@ -270,7 +315,8 @@ class modVideoHelper
 	{
 		$params = modVideoHelper::parseTag($tag);
 
-		switch ($params[0]) {
+		switch ($params[0])
+		{
 			case "youtube":
 			default:
 				$embed = modVideoHelper::youtube($params);
@@ -286,6 +332,7 @@ class modVideoHelper
 		$tag = trim($tag, '{}');
 		$tag = str_replace('&nbsp;', ' ', $tag);
 		$tag = explode(' ', $tag);
+
 		return $tag;
 	}
 
@@ -294,43 +341,44 @@ class modVideoHelper
 	{
 
 		$attributes = array(
-			'id'    => 'ytplayer',
-			'type'  => 'text/html',
+			'id'          => 'ytplayer',
+			'type'        => 'text/html',
 			/*
 								'width' => '640',
 								'height' => '390',
 			*/
-			'src'   => 'https://youtube.com/embed/'.$params[1],
-			'origin' => JURI::root(),
+			'src'         => 'https://youtube.com/embed/' . $params[1],
+			'origin'      => JURI::root(),
 			'frameborder' => '0'
 		);
-		$tag = array();
-		foreach($attributes as $key=>$value) {
-			$tag[] = $key.'="'.$value.'"';
+		$tag        = array();
+		foreach ($attributes as $key => $value)
+		{
+			$tag[] = $key . '="' . $value . '"';
 		}
 
-		return '<iframe '.implode($tag, ' ').' ></iframe>';
+		return '<iframe ' . implode($tag, ' ') . ' ></iframe>';
 
 
-		return '<iframe '.implode(' ', $tag).' ></iframe>';
+		return '<iframe ' . implode(' ', $tag) . ' ></iframe>';
 	}
 
 	public static function getArticleRoute($id, $itemid = 0, $catid = 0, $language = 0)
 	{
-		$needles = array(			'article'  => array((int) $id)
+		$needles = array('article' => array((int) $id)
 		);
 
 		//Create the link
-		$link = 'index.php?option=com_content&view=article&id='. $id;
+		$link = 'index.php?option=com_content&view=article&id=' . $id;
 		if ((int) $catid > 1)
 		{
 			$categories = JCategories::getInstance('Content');
-			$category = $categories->get((int) $catid);
+			$category   = $categories->get((int) $catid);
 			if ($category)
 			{
-				$needles['category'] = array_reverse($category->getPath());
+				$needles['category']   = array_reverse($category->getPath());
 				$needles['categories'] = $needles['category'];
-				$link .= '&catid='.$catid;
+				$link                  .= '&catid=' . $catid;
 			}
 		}
 		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
@@ -339,12 +387,12 @@ class modVideoHelper
 
 			if (isset(self::$lang_lookup[$language]))
 			{
-				$link .= '&lang=' . self::$lang_lookup[$language];
+				$link                .= '&lang=' . self::$lang_lookup[$language];
 				$needles['language'] = $language;
 			}
 		}
 
-		$link .= '&Itemid='.$itemid;
+		$link .= '&Itemid=' . $itemid;
 
 		return $link;
 
