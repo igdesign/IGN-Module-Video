@@ -258,26 +258,6 @@ class modVideoHelper
 		return $results;
 	}
 
-	private static function truncate($text, $chars = 25)
-	{
-		$trunc = false;
-		if (strlen($text) >= $chars)
-		{
-			$trunc = true;
-		}
-
-		$text = $text . " ";
-		$text = substr($text, 0, $chars);
-		$text = substr($text, 0, strrpos($text, ' '));
-
-		if ($trunc == true)
-		{
-			$text = trim($text) . "&hellip;";
-		}
-
-		return $text;
-	}
-
 	public static function getTag($content)
 	{
 
@@ -326,7 +306,6 @@ class modVideoHelper
 		return $embed;
 	}
 
-
 	public static function parseTag($tag)
 	{
 		$tag = trim($tag, '{}');
@@ -335,7 +314,6 @@ class modVideoHelper
 
 		return $tag;
 	}
-
 
 	public static function youtube($params)
 	{
@@ -361,6 +339,26 @@ class modVideoHelper
 
 
 		return '<iframe ' . implode(' ', $tag) . ' ></iframe>';
+	}
+
+	private static function truncate($text, $chars = 25)
+	{
+		$trunc = false;
+		if (strlen($text) >= $chars)
+		{
+			$trunc = true;
+		}
+
+		$text = $text . " ";
+		$text = substr($text, 0, $chars);
+		$text = substr($text, 0, strrpos($text, ' '));
+
+		if ($trunc == true)
+		{
+			$text = trim($text) . "&hellip;";
+		}
+
+		return $text;
 	}
 
 	public static function getArticleRoute($id, $itemid = 0, $catid = 0, $language = 0)
