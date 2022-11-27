@@ -13,13 +13,13 @@
  */
 
 // no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+defined('_JEXEC') or die('Restricted access');
 
 // Include the syndicate functions only once
-require_once __DIR__ .'/helper.php';
+require_once __DIR__ . '/helper.php';
 
 $template = $params->get('template', 'default');
 
-$list = modVideoHelper::getItem( $params );
+$list = modVideoHelper::getItem($params);
 
-require( JModuleHelper::getLayoutPath( 'mod_video', $template ) );
+require(JModuleHelper::getLayoutPath('mod_video', $template));

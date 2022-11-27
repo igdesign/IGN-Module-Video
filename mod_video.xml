@@ -3,209 +3,203 @@
            version="3.2.1"
            client="site"
            method="upgrade">
-  <name>Video</name>
-  <author>Gregory Daynes</author>
-  <version>0.0.1</version>
-  <creationDate>2013-12-25</creationDate>
-  <copyright>Copyright (C) 2013 jEvolve.net. All rights reserved.</copyright>
-  <license>GNU GPL v3</license>
-  <authorEmail>info@jevolve.net</authorEmail>
-  <authorUrl>http://jevovlve.net</authorUrl>
-  <description></description>
+    <name>Video</name>
+    <author>Gregory Daynes</author>
+    <version>0.0.1</version>
+    <creationDate>2013-12-25</creationDate>
+    <copyright>Copyright (C) 2013 jEvolve.net. All rights reserved.</copyright>
+    <license>GNU GPL v3</license>
+    <authorEmail>info@jevolve.net</authorEmail>
+    <authorUrl>http://jevovlve.net</authorUrl>
+    <description></description>
 
-  <files>
-    <filename>mod_video.xml</filename>
-    <filename module="mod_video">mod_video.php</filename>
-    <folder>tmpl</folder>
-  </files>
+    <files>
+        <filename>mod_video.xml</filename>
+        <filename module="mod_video">mod_video.php</filename>
+        <folder>tmpl</folder>
+    </files>
 
-  <media folder="media" destination="mod_video">
-    <folder>css</folder>
-    <folder>js</folder>
-  </media>
+    <media folder="media" destination="mod_video">
+        <folder>css</folder>
+        <folder>js</folder>
+    </media>
 
-  <config>
-    <fields name="params">
-      <fieldset name="basic">
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
 
-        <field name="itemid"
-               type="text"
-               label="Menu ID"
-               description="Menu id to use for link" />
+                <field name="itemid"
+                       type="text"
+                       label="Menu ID"
+                       description="Menu id to use for link"/>
 
-        <field name="categories"
-               type="category"
-               extension="com_content"
-               label="Select categories"
-               description="Select one or multiple categories to get content items from."
-               multiple="true"
-               class="inputbox span12 small" />
+                <field name="categories"
+                       type="category"
+                       extension="com_content"
+                       label="Select categories"
+                       description="Select one or multiple categories to get content items from."
+                       multiple="true"
+                       class="inputbox span12 small"/>
 
-        <field name="not_categories"
-               type="category"
-               extension="com_content"
-               label="Not These Categories"
-               description="Select one or multiple categories to ignore content items in."
-               multiple="true"
-               class="inputbox span12 small" />
+                <field name="not_categories"
+                       type="category"
+                       extension="com_content"
+                       label="Not These Categories"
+                       description="Select one or multiple categories to ignore content items in."
+                       multiple="true"
+                       class="inputbox span12 small"/>
 
-        <field name="tags"
-               type="tag"
-               label="JTAG"
-               description="JTAG_DESC"
-               mode="ajax"
-               class="inputbox span12 small"
-               multiple="true" />
+                <field name="tags"
+                       type="tag"
+                       label="JTAG"
+                       description="JTAG_DESC"
+                       mode="ajax"
+                       class="inputbox span12 small"
+                       multiple="true"/>
 
-        <field name="featured_only"
-               type="radio"
-               default="0"
-               label="Featured items"
-               description="Only show featured items">
-               <option value="0">No</option>
-               <option value="1">Yes</option>
-               </field>
+                <field name="featured_only"
+                       type="radio"
+                       default="0"
+                       label="Featured items"
+                       description="Only show featured items">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </field>
 
-        <field name="maximum"
-               type="integer"
-               default="5"
-               label="Number of Items"
-               description="Choose an maximum number of items to dispaly"
-               first="1"
-               last="10"
-               step="1" />
+                <field name="maximum"
+                       type="integer"
+                       default="5"
+                       label="Number of Items"
+                       description="Choose an maximum number of items to dispaly"
+                       first="1"
+                       last="10"
+                       step="1"/>
 
-        <field name="order"
-               type="list"
-               default="title"
-               label="Order"
-               description="Order of items">
-               <option value="0">Ordering</option>
-               <option value="1">Title</option>
-               <option value="2">Created Date</option>
-               <option value="3">Published Date</option>
-               </field>
+                <field name="order"
+                       type="list"
+                       default="title"
+                       label="Order"
+                       description="Order of items">
+                    <option value="0">Ordering</option>
+                    <option value="1">Title</option>
+                    <option value="2">Created Date</option>
+                    <option value="3">Published Date</option>
+                </field>
 
-        <field name="featured_first"
-               type="radio"
-               default="0"
-               label="Featured First"
-               description="Show items marked featured first">
-               <option value="0">No</option>
-               <option value="1">Yes</option>
-               </field>
+                <field name="featured_first"
+                       type="radio"
+                       default="0"
+                       label="Featured First"
+                       description="Show items marked featured first">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </field>
 
-        <field name="truncate"
-               type="text"
-               default="140"
-               label="Text Limit"
-               description="Limit the length of content for the intro text"
-               size="10" />
+                <field name="truncate"
+                       type="text"
+                       default="140"
+                       label="Text Limit"
+                       description="Limit the length of content for the intro text"
+                       size="10"/>
 
-        <field name="direction"
-               type="list"
-               default="0"
-               label="Direction"
-               description="Order items either ascending or descending">
-               <option value="0">Ascending</option>
-               <option value="1">Descending</option>
-               </field>
+                <field name="direction"
+                       type="list"
+                       default="0"
+                       label="Direction"
+                       description="Order items either ascending or descending">
+                    <option value="0">Ascending</option>
+                    <option value="1">Descending</option>
+                </field>
 
-        <field name="template"
-  					   type="filelist"
-  					   label="Template"
-  					   description="The layout to display items with"
-  					   directory="/modules/mod_video/tmpl"
-  					   default="Carousel"
-  					   hide_default="1"
-  					   hide_none="1"
-  					   stripext="1"
-  					   filter="\.php$"
-  					   exclude="^_" />
+                <field name="template"
+                       type="filelist"
+                       label="Template"
+                       description="The layout to display items with"
+                       directory="/modules/mod_video/tmpl"
+                       default="Carousel"
+                       hide_default="1"
+                       hide_none="1"
+                       stripext="1"
+                       filter="\.php$"
+                       exclude="^_"/>
 
-  		  <field name="use_js"
-               type="radio"
-               default="1"
-               label="Include Javascript"
-               description="Use the included Javascript in module">
-               <option value="0">No</option>
-               <option value="1">Yes</option>
-               </field>
+                <field name="use_js"
+                       type="radio"
+                       default="1"
+                       label="Include Javascript"
+                       description="Use the included Javascript in module">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </field>
 
-        <field name="use_css"
-               type="radio"
-               default="1"
-               label="Include CSS"
-               description="Use the included CSS in module">
-               <option value="0">No</option>
-               <option value="1">Yes</option>
-               </field>
+                <field name="use_css"
+                       type="radio"
+                       default="1"
+                       label="Include CSS"
+                       description="Use the included CSS in module">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </field>
 
-        <field name="show_title"
-               type="radio"
-               default="1"
-               label="Show Title"
-               description="">
-               <option value="0">No</option>
-               <option value="1">Yes</option>
-               </field>
+                <field name="show_title"
+                       type="radio"
+                       default="1"
+                       label="Show Title"
+                       description="">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </field>
 
-        <field name="show_intro-text"
-               type="radio"
-               default="1"
-               label="Show Intro Text"
-               description="">
-               <option value="0">No</option>
-               <option value="1">Yes</option>
-               </field>
+                <field name="show_intro-text"
+                       type="radio"
+                       default="1"
+                       label="Show Intro Text"
+                       description="">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </field>
 
-        <field name="show_read-more"
-               type="radio"
-               default="1"
-               label="Show Read More"
-               description="">
-               <option value="0">No</option>
-               <option value="1">Yes</option>
-               </field>
+                <field name="show_read-more"
+                       type="radio"
+                       default="1"
+                       label="Show Read More"
+                       description="">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </field>
 
-        <field name="interval"
-               type="text"
-               default="5"
-               label="Rotation Interval"
-               description="" />
+                <field name="interval"
+                       type="text"
+                       default="5"
+                       label="Rotation Interval"
+                       description=""/>
 
-      </fieldset>
+            </fieldset>
 
-      <fieldset name="advanced">
+            <fieldset name="advanced">
 
-        <!--
-<field name="breakpoint"
-               type="text"
-               default="480"
-               label="Breakpoint"
-               description="The maximum number of pixels before the carousel turns into a column of content"
-               size="10" />
+                <!--
+        <field name="breakpoint"
+                       type="text"
+                       default="480"
+                       label="Breakpoint"
+                       description="The maximum number of pixels before the carousel turns into a column of content"
+                       size="10" />
 
-        <field name="breakpoint_images"
-               type="text"
-               default="480, 768"
-               label="Breakpoint"
-               description="The Miniomum number of pixels before the next image size is used"
-               size="10" />
--->
+                <field name="breakpoint_images"
+                       type="text"
+                       default="480, 768"
+                       label="Breakpoint"
+                       description="The Miniomum number of pixels before the next image size is used"
+                       size="10" />
+        -->
 
-        <field
-					name="moduleclass_sfx"
-					type="textarea" rows="3"
-					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
-					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
-
-
-      </fieldset>
-
-
-
-
-    </fields>
-  </config>
+                <field
+                        name="moduleclass_sfx"
+                        type="textarea" rows="3"
+                        label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+                        description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"/>
+            </fieldset>
+        </fields>
+    </config>
 </extension>

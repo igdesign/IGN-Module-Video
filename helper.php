@@ -14,7 +14,6 @@
 
 class modVideoHelper
 {
-
 	/**
 	 * Retrieves a list of content items to display
 	 *
@@ -24,8 +23,6 @@ class modVideoHelper
 	 */
 	public static function getItem(&$params)
 	{
-
-
 		$db     = JFactory::getDbo();
 		$user   = JFactory::getUser();
 		$groups = implode(',', $user->getAuthorisedViewLevels());
@@ -45,8 +42,6 @@ class modVideoHelper
 		$truncate       = $params->get('truncate', 140);
 		$itemid         = $params->get('itemid', false);
 		$offset         = $params->get('offset', 0);
-		$itemid         = $params->get('itemid', false);
-
 
 		$access     = !JComponentHelper::getParams('com_content')->get('show_noauth');
 		$authorised = JAccess::getAuthorisedViewLevels(JFactory::getUser()->get('id'));
@@ -65,7 +60,6 @@ class modVideoHelper
 		$qSelect[] = $db->quoteName('content.introtext', 'content_introtext');
 		$qSelect[] = $db->quoteName('content.fulltext', 'content_fulltext');
 		$qSelect[] = $db->quoteName('content.images', 'content_images');
-
 
 		$qFrom[] = $db->quoteName('#__content', 'content');
 
@@ -180,7 +174,6 @@ class modVideoHelper
 		/*     print_r($qOrder); */
 		/*     print_r($qLimit); */
 
-
 		$query = '';
 		if (!$qSelect)
 		{
@@ -207,19 +200,13 @@ class modVideoHelper
 		}
 		$query .= ' LIMIT ' . implode(', ', $qLimit);
 
-
 		// build query and return it
 		$db->setQuery($query);
-
-
-		/*     var_dump($db->replacePrefix((string) $db->getQuery())); */
-		/*     exit; */
 
 		$results = $db->loadObjectList();
 
 		foreach ($results as $key => $result)
 		{
-
 			$result->content_title = trim($result->content_title);
 			$result->text          = $result->content_introtext . $result->content_fulltext;
 			$result->text          = strip_tags($result->text, '<object><iframe>');
@@ -244,13 +231,11 @@ class modVideoHelper
 				{
 					$result->link = JRoute::_(ContentHelperRoute::getArticleRoute($result->slug, $result->catslug));
 				}
-
 			}
 			else
 			{
 				$result->link = JRoute::_('index.php?option=com_users&view=login');
 			}
-
 
 			$results[$key] = $result;
 		}
@@ -260,7 +245,6 @@ class modVideoHelper
 
 	public static function getTag($content)
 	{
-
 		$match = array();
 		$type  = null;
 
@@ -286,7 +270,6 @@ class modVideoHelper
 			preg_match($patternObject, $content, $match);
 			$content = preg_replace($patternObject, '', $content);
 		}
-
 
 		return array('video' => $match[0], 'content' => $content);
 	}
@@ -317,7 +300,6 @@ class modVideoHelper
 
 	public static function youtube($params)
 	{
-
 		$attributes = array('id'  => 'ytplayer', 'type' => 'text/html', /*
 								'width' => '640',
 								'height' => '390',
@@ -330,7 +312,6 @@ class modVideoHelper
 		}
 
 		return '<iframe ' . implode($tag, ' ') . ' ></iframe>';
-
 
 		return '<iframe ' . implode(' ', $tag) . ' ></iframe>';
 	}
@@ -386,6 +367,5 @@ class modVideoHelper
 		$link .= '&Itemid=' . $itemid;
 
 		return $link;
-
 	}
 }
