@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<extension type="module"
-           version="3.2.1"
-           client="site"
-           method="upgrade">
+<extension type="module" version="3.2.1" client="site" method="upgrade">
     <name>Video</name>
     <author>Gregory Daynes</author>
-    <version>0.0.1</version>
-    <creationDate>2013-12-25</creationDate>
-    <copyright>Copyright (C) 2013 jEvolve.net. All rights reserved.</copyright>
+    <version>1.0.0</version>
+    <creationDate>2022-11-26</creationDate>
+    <copyright>Copyright (C) 2022 Gregory Daynes.</copyright>
     <license>GNU GPL v3</license>
-    <authorEmail>info@jevolve.net</authorEmail>
-    <authorUrl>http://jevovlve.net</authorUrl>
+    <authorEmail>email@gregdaynes.com</authorEmail>
+    <authorUrl>https://gregdaynes.com</authorUrl>
     <description></description>
 
     <files>
