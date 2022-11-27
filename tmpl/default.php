@@ -16,6 +16,8 @@ $moduleclass_sfx = $params->get('moduleclass_sfx', $template); ?>
 
     <div class="video__content">
       <?=$item->content_introtext;?>
+	  
+      <a class="<?php echo trim($moduleclass_sfx); ?>__link" href="<?php echo $item->link; ?>">Watch Video&hellip;</a>
     </div>
   </li><!--
   <?php endforeach; ?>

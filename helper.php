@@ -44,7 +44,7 @@ class modVideoHelper
     $truncate   = $params->get('truncate', 140);
     $itemid     = $params->get('itemid', false);
     $offset     = $params->get('offset', 0);
-
+    $itemid     = $params->get('itemid', false);
 
 
     $access = !JComponentHelper::getParams('com_content')->get('show_noauth');
@@ -115,6 +115,9 @@ class modVideoHelper
     if ($feature_first) {
       $qOrder[] = $db->quoteName('content.featured').' DESC';
     }
+	
+	// Published Only
+	$qWhere[] = $db->quoteName('content.state').' = '. 1;
 
 
     // ordering
@@ -192,8 +195,23 @@ class modVideoHelper
 
       $result->content_introtext = modVideoHelper::truncate($result->text, $truncate);
 
-      $results[$key] = $result;
+  	$result->slug = $result->content_id . ':' . $result->content_alias;
+  	$result->catslug = $result->category_id . ':' . $result->category_alias;
 
+  	if ($access || in_array($result->access, $authorised)) {
+  		// We know that user has the privilege to view the article
+  		if ($itemid) {
+  			$result->link = modVideoHelper::getArticleRoute($result->slug, $itemid, $result->catslug);
+  		} else {
+  			$result->link = JRoute::_(ContentHelperRoute::getArticleRoute($result->slug, $result->catslug));
+  		}
+
+      } else {
+  		$result->link = JRoute::_('index.php?option=com_users&view=login');
+  	}
+
+
+      $results[$key] = $result;
     }
 
     return $results;
@@ -282,7 +300,7 @@ class modVideoHelper
                     'width' => '640',
                     'height' => '390',
 */
-                    'src'   => 'http://youtube.com/embed/'.$params[1],
+                    'src'   => 'https://youtube.com/embed/'.$params[1],
                     'origin' => JURI::root(),
                     'frameborder' => '0'
                   );
@@ -293,6 +311,42 @@ class modVideoHelper
 
     return '<iframe '.implode($tag, ' ').' ></iframe>';
 
+
+  }
+  
+  public static function getArticleRoute($id, $itemid = 0, $catid = 0, $language = 0)
+  {
+    $needles = array(
+			'article'  => array((int) $id)
+		);
+
+		//Create the link
+		$link = 'index.php?option=com_content&view=article&id='. $id;
+		if ((int) $catid > 1)
+		{
+			$categories = JCategories::getInstance('Content');
+			$category = $categories->get((int) $catid);
+			if ($category)
+			{
+				$needles['category'] = array_reverse($category->getPath());
+				$needles['categories'] = $needles['category'];
+				$link .= '&catid='.$catid;
+			}
+		}
+		if ($language && $language != "*" && JLanguageMultilang::isEnabled())
+		{
+			self::buildLanguageLookup();
+
+			if (isset(self::$lang_lookup[$language]))
+			{
+				$link .= '&lang=' . self::$lang_lookup[$language];
+				$needles['language'] = $language;
+			}
+		}
+
+		$link .= '&Itemid='.$itemid;
+
+		return $link;
 
   }
 }
