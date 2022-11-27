@@ -312,12 +312,12 @@ class modVideoHelper
     return '<iframe '.implode($tag, ' ').' ></iframe>';
 
 
+    return '<iframe '.implode(' ', $tag).' ></iframe>';
   }
   
   public static function getArticleRoute($id, $itemid = 0, $catid = 0, $language = 0)
   {
-    $needles = array(
-			'article'  => array((int) $id)
+    $needles = array(			'article'  => array((int) $id)
 		);
 
 		//Create the link
