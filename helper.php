@@ -318,17 +318,11 @@ class modVideoHelper
 	public static function youtube($params)
 	{
 
-		$attributes = array(
-			'id'          => 'ytplayer',
-			'type'        => 'text/html',
-			/*
+		$attributes = array('id'  => 'ytplayer', 'type' => 'text/html', /*
 								'width' => '640',
 								'height' => '390',
 			*/
-			'src'         => 'https://youtube.com/embed/' . $params[1],
-			'origin'      => JURI::root(),
-			'frameborder' => '0'
-		);
+		                    'src' => 'https://youtube.com/embed/' . $params[1], 'origin' => JURI::root(), 'frameborder' => '0');
 		$tag        = array();
 		foreach ($attributes as $key => $value)
 		{
@@ -363,8 +357,7 @@ class modVideoHelper
 
 	public static function getArticleRoute($id, $itemid = 0, $catid = 0, $language = 0)
 	{
-		$needles = array('article' => array((int) $id)
-		);
+		$needles = array('article' => array((int) $id));
 
 		//Create the link
 		$link = 'index.php?option=com_content&view=article&id=' . $id;
