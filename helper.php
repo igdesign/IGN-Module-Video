@@ -311,8 +311,6 @@ class modVideoHelper
 			$tag[] = $key . '="' . $value . '"';
 		}
 
-		return '<iframe ' . implode($tag, ' ') . ' ></iframe>';
-
 		return '<iframe ' . implode(' ', $tag) . ' ></iframe>';
 	}
 
